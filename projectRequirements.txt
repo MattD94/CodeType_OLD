@@ -1,0 +1,41 @@
+CodeType minimal user requirements:
+	-display only a fragment of code at a time
+	-read in code files to be used for practice
+	-user must type all characters correctly to complete
+	-incorrectly typed characters must be erased and retyped
+	-display progress of fragment completion (untyped/typed characters)
+	-record time taken to complete a fragment and calculate scores based on time
+	-comments are not considered part of the code, and are skipped over when typing but still displayed
+
+
+CodeType system requirements (WIP):
+	display only a fragment of code at a time
+		-the main display shows as many lines of code as needed to fill the display without inducing scrolling at the default size
+		-scrolling occurs when the display is too small to fit both the code and comments
+		-scrolling down happens without animation by one page length at a time whenever the cursor reaches the second to last line on the display
+		-scrolling up happens without animation by one line at a time whenever the cursor reaches the character previous to the upper left most character
+
+	read in code files to be used for practice
+
+	allow user to progress only as long as characters are correctly typed
+		-cursor advances even when incorrectly typed, but must be backspaced and retyped correctly to complete
+		-after too many consecutive incorrect keypresses, the cursor will not advance
+
+	display progress of fragment completion through basic code highlighting and coloring
+		-use at least 5 different styles
+			comments,
+			untyped code,
+			correctly typed code,
+			incorrectly type code,
+			next character to be typed
+
+	score keeping
+		-record time taken to complete a code fragment
+			-timing starts once the user enters a character
+			-timing ends once the user has typed the last character in the code sequence with all characters correctly typed 
+		-record how many characters were typed
+			-includes backspace, whitespace, symbols, and alphabetical characters but not control characters/modifier keys
+		-characters that needed to be typed
+			-includes alphabetial characters, symbols, and non-leading/trailing whitespace (i.e. only single spaces between words and line breaks)
+		-characters per minute (CPM) calculated as (# of characters in code fragment)/(time taken)
+		-words per minute (WPM) calculated as (# of characters in code fragment / 5) / (time taken)
