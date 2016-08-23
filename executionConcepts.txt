@@ -1,0 +1,15 @@
+potential objects/concepts:
+
+score (possibly contained within lesson)
+code fragment
+lesson (contains code fragments, possibly holds scores)
+lesson generator (creates lessons from text files containing code by making code fragments and determining which parts are comments)
+codeType engine (main game logic)
+interfaces: lesson chooser, fragment display, score display, lesson creator, pause
+
+
+major parts:
+GUI - direct input to engine, process results
+CodeType Engine - processes input and determines appropriate progress, handles timing and calculates score
+Code Fragment - container that holds code and distinguishes between comments/uneeded characters and code characters
+
