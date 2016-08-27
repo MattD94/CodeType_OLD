@@ -2,6 +2,7 @@ potential objects/concepts:
 
 score (possibly contained within lesson)
 code fragment
+codeType input - a simple container that describes an input action (character, backspace, pause)
 lesson (contains code fragments, possibly holds scores)
 lesson generator (creates lessons from text files containing code by making code fragments and determining which parts are comments)
 codeType engine (main game logic)
@@ -13,3 +14,14 @@ GUI - direct input to engine, process results
 CodeType Engine - processes input and determines appropriate progress, handles timing and calculates score
 Code Fragment - container that holds code and distinguishes between comments/uneeded characters and code characters
 
+Process of events for updating display according to keyboard input:
+Durring a lesson, the GUI starts an async task whereby the engine waits for input in a queue. The top level GUI receives all keyboard input without allowing the event progress to its child components.
+The input is placed in the engine's queue when the GUI calls the process input method of the engine.
+After processing an input from the queue the engine indicates that a GUI update is required. The GUI regularly polls the engine for its update status (often enough to provide a responsive UI) and updates the text box when needed.
+To update the text, the GUI first acknowledges the update to the engine, then calls the format method of the engine to apply the proper formatting to the text. The engine's format method colors the text according to the current state of the progress.
+The point is for the GUI to be blind to the engine's internal handling of its (thread safe) queue and variables (protected by a read-write lock to ensure multi thread safety) while keeping all access/changes to GUI components on the GUI's thread.
+
+Process of events for pausing the lesson:
+As with handling keyboard input, when the user clicks on the screen or the window loses focus the GUI captures the event and calls the process input method of the engine indicating a pause.
+When the engine encounters a pause it stops the timer and sets a flag internally so the format method updates the text box accordingly then sets the update status so that the format method will be called.
+The GUI continues as normal, passing any input to the engine as before. When the engine recieves new input, it resumes the timer, clears the internal pause flag and processes the input as before.
