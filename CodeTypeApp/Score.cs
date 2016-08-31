@@ -9,6 +9,7 @@ namespace CodeTypeApp {
     /// Object to hold a user's scoring data for a fragment.
     /// Also includes methods to calculate some statistics regarding performance.
     /// </summary>
+    [Serializable]
     class Score {
         // constant to define the length of a word for calculations
         public const double Chars_Per_Word = 5;
@@ -99,7 +100,7 @@ namespace CodeTypeApp {
         /// <param name="newTime"></param>
         /// <param name="newTyped"></param>
         /// <param name="newErased"></param>
-        public void Update(long newTime, int newTyped, int newErased) {
+        internal void Update(long newTime, int newTyped, int newErased) {
             // accumulate the totals
             completions++;
             totalTime += (ulong)newTime;

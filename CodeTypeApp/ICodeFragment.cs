@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace CodeTypeApp {
     /// <summary>
@@ -10,7 +11,7 @@ namespace CodeTypeApp {
     /// which is meant as a container for a section of code and can identify which characters are
     /// meant to be typed (code) and which characters should be skipped (comment).
     /// </summary>
-    interface ICodeFragment {
+    interface ICodeFragment : ISerializable {
         /// <summary>
         /// Returns the index of the first character that is not part of a comment, relative to the
         /// beginning of the fragment.
@@ -24,6 +25,12 @@ namespace CodeTypeApp {
         /// <param name="pos"></param>
         /// <returns>character at the position</returns>
         char GetChar(int pos);
+
+        /// <summary>
+        /// Returns the number of code characters in the fragment
+        /// </summary>
+        /// <returns>number of code characters</returns>
+        int GetCodeCount();
 
         /// <summary>
         /// Returns the fragment as a string with all non-code characters omitted.
